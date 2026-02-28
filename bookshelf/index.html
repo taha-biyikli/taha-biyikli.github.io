@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookshelf - Taha Biyikli</title>
-    <style>body { max-width: 70ch; }</style>
+    <style>body { max-width: 70ch; } .books { columns: 2; } .books h3, .books ul { break-inside: avoid; }</style>
 </head>
 <body>
 
@@ -24,6 +24,7 @@
 Here is a non-exhaustive list of books I've enjoyed, in no particular order. I keep this list primarily as a reminder that for many of these authors, I've only read a single work, and that I should spend more time reading broadly within the work of authors I like.
 </p>
 
+<div class="books">
 <h3>Robert Nystrom</h3>
 <ul>
     <li>Crafting Interpreters (currently reading)</li>
@@ -271,6 +272,22 @@ Here is a non-exhaustive list of books I've enjoyed, in no particular order. I k
 <ul>
     <li>Practical Malware Analysis</li>
 </ul>
+</div>
+
+<script>
+document.querySelectorAll('.books h3').forEach(h3 => {
+    const author = h3.textContent.trim();
+    const ul = h3.nextElementSibling;
+    if (ul && ul.tagName === 'UL') {
+        ul.querySelectorAll('li').forEach(li => {
+            const title = li.textContent.replace(/\s*\(currently reading\)/i, '').trim();
+            const query = encodeURIComponent(title + ' ' + author).replace(/%20/g, '+');
+            const url = 'https://www.goodreads.com/search?q=' + query;
+            li.innerHTML = '<a href="' + url + '">' + li.innerHTML + '</a>';
+        });
+    }
+});
+</script>
 
 </body>
 </html>
