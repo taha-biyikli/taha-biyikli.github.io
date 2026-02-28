@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookshelf - Taha Biyikli</title>
-    <style>body { max-width: 70ch; } .books { columns: 2; } .books h3, .books ul { break-inside: avoid; }</style>
+    <style>body { max-width: 70ch; } .books { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2em; } .author { break-inside: avoid; }</style>
 </head>
 <body>
 
@@ -279,6 +279,11 @@ document.querySelectorAll('.books h3').forEach(h3 => {
     const author = h3.textContent.trim();
     const ul = h3.nextElementSibling;
     if (ul && ul.tagName === 'UL') {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'author';
+        h3.parentNode.insertBefore(wrapper, h3);
+        wrapper.appendChild(h3);
+        wrapper.appendChild(ul);
         ul.querySelectorAll('li').forEach(li => {
             const title = li.textContent.replace(/\s*\(currently reading\)/i, '').trim();
             const query = encodeURIComponent(title + ' ' + author).replace(/%20/g, '+');
