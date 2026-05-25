@@ -13,16 +13,17 @@
 <nav>
     <a href="/">home</a> |
     <a href="/security">security</a> |
-    <a href="/bookshelf">bookshelf</a> |
     <a href="/lockpicking">lockpicking</a> |
     <a href="/pgp">pgp</a> |
-    <a href="https://letterboxd.com/tahabiyikli/">letterboxd</a> |
+    <a href="/reading">reading</a> |
+    <a href="/films">films</a> |
+    <a href="/running">running</a> |
     <a href="https://signal.me/#eu/Bahm1vIx9On-spFJGkPJceaYcprfYCmPDbw4y_rcSCmRbNuVXuJI4bRh4uMc7ey1">signal</a>
 </nav>
 
 <hr>
 
-<p>I found vulnerabilities in:</p>
+<p>In high school, I found vulnerabilities in:</p>
 
 <ul>
     <li><a href="https://web.archive.org/web/20230924004339/https://support.apple.com/en-us/HT201536/">apple</a></li>
@@ -39,6 +40,26 @@
     <li><a href="https://web.archive.org/web/20230924004339/https://www.utwente.nl/en/cyber-safety/responsible/hall-of-fame/">university of twente</a></li>
     <li><a href="https://web.archive.org/web/20230924004339/https://t4ha.com/misc/belastingdienst.png">dutch government</a></li>
 </ul>
+
+<h2>On the Verification Problem in Vulnerability Discovery</h2>
+
+<p>Nowadays I'm working on finding all vulnerabilities on the internet. That means you need to make machines exceptional at reverse engineering, as other people's web applications usually don't have their source code available.</p>
+
+<p>Reverse engineering is difficult, but turns out the more difficult problem is verifying vulnerabilities.</p>
+
+<p>A vulnerability is a behavior reachable under the implementation that should be unreachable under the intended specification. To verify one, you need the intended specification. For most vulnerability classes, this specification is application-specific and never written down. There is no general oracle.</p>
+
+<p>For certain vulnerability classes, it's easy to build universal, deterministic oracles. Examples are memory corruptions (crash-based, sanitizer-based...), SQL injections (SLEEP 5 vs SLEEP 10) and cross-site scripting (alert(canary)).</p>
+
+<p>Almost nothing else has a universal oracle. All questions concerning access control, such as whether a particular object access is permitted, depends on the application's semantics, and by Rice's theorem you cannot recover these from the implementation alone in general.</p>
+
+<p>Many think that LLMs are good solutions to the verification problem. Unfortunately, this is not the case as they will always yield a nontrivial amount of false positives.</p>
+
+<p>Suppose your verifier has a 1% false positive rate. You test 50,000 candidate inputs against an application with 5 real vulnerabilities. The prior P(vulnerability | input) is on the order of 10<sup>-4</sup>.</p>
+
+<p>You report 5 true positives and 500 false positives. Precision is 1%, and the user learns to treat every finding as noise. If you have a 1% false positive rate, you will neither be able to find all vulnerabilities on the internet nor build a useful enterprise security product.</p>
+
+<p>So you have to construct an oracle per application, and you have to trust it.</p>
 
 </body>
 </html>
