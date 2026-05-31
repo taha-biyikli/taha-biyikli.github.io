@@ -26,23 +26,7 @@
 
 <p>In high school, I found vulnerabilities in <a href="https://web.archive.org/web/20230924004339/https://support.apple.com/en-us/HT201536/">apple</a>, <a href="https://web.archive.org/web/20230924004339/https://www.nokia.com/responsible-disclosure/">nokia</a>, <a href="https://web.archive.org/web/20230924004339/https://www.bbc.com/backstage/security-disclosure-policy/security/">bbc</a>, <a href="https://web.archive.org/web/20230924004339/https://hackerone.com/sony/thanks?type=team">sony</a>, <a href="https://web.archive.org/web/20230924004339/https://hackerone.com/deptofdefense/thanks?type=team">us dept of defense</a>, <a href="https://web.archive.org/web/20230924004339/https://www.asus.com/Static_WebPage/ASUS-Product-Security-Advisory/">asus</a>, <a href="https://web.archive.org/web/20230924004339/https://hackerone.com/mailru">mailru</a>, <a href="https://web.archive.org/web/20230924004339/https://hackerone.com/att">at&t</a>, <a href="https://web.archive.org/web/20230924004339/https://www.philips.com/a-w/security/coordinated-vulnerability-disclosure/hall-of-honors.html">philips</a> and the <a href="https://web.archive.org/web/20230924004339/https://t4ha.com/misc/belastingdienst.png">dutch government</a>.</p>
 
-<p>I want to find all vulnerabilities on the internet. That means I need to make machines that are really good at generating exploit candidates, and give them a way to check if a candidate maps to a vulnerability. The latter is more difficult, as LLMs are good at generating candidates but bad at verification.</p>
-
-<p>A vulnerability is a behavior reachable under the implementation that should be unreachable under the intended specification. To verify one, you need the intended specification. For most vulnerability classes, this specification is application-specific and never written down. There is no general oracle.</p>
-
-<p>For certain vulnerability classes, it's easy to build universal, deterministic oracles because the intended specification is clear. From a SQL injection perspective, the intended behavior of an application is not to let end users run arbitrary SQL queries. This generalizes well to all web applications. Memory corruptions and cross-site scripting are similarly generalizable.</p>
-
-<p>For access control or business logic vulnerabilities, however, it's much harder to define what the intended behavior is.</p>
-
-<p>All questions concerning access control, such as whether a particular object access is permitted, depend on the application's semantics, and by Rice's theorem you cannot recover these from the implementation alone in general.</p>
-
-<p>Many think that LLMs are good solutions to the verification problem. Unfortunately, this is not the case as they will always yield a nontrivial amount of false positives.</p>
-
-<p>Suppose your verifier has a 1% false positive rate. You test 50,000 candidate inputs against an application with 5 real vulnerabilities. The prior P(vulnerability | input) is on the order of 10<sup>-4</sup>.</p>
-
-<p>You end up with 5 true positives and 500 false positives, which gives you a precision of 1%. Hence, you need 0 false positives.</p>
-
-<p>Whoever solves verification finds all vulnerabilities on the internet.</p>
+<p>Nowadays I'm working on finding all vulnerabilities on the internet. I wrote about why I think <a href="/posts/verification-is-the-most-important-problem-in-security">verification is the most important problem in security</a>.</p>
 
 </body>
 </html>
