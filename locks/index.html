@@ -24,6 +24,12 @@
 <hr>
 
 <p>My lock collection.</p>
+<form id="lock-search" action="/locks/" method="get">
+    <label for="q">Search: </label>
+    <input type="search" id="q" name="q" placeholder="model or type">
+    <button type="submit">Filter</button>
+</form>
+<p id="search-status"></p>
 
 <table>
     <thead>
@@ -139,6 +145,34 @@
         </tr>
     </tbody>
 </table>
+
+<script>
+(function () {
+    var params = new URLSearchParams(window.location.search);
+    var q = params.get("q") || "";
+    var input = document.getElementById("q");
+    var status = document.getElementById("search-status");
+    var rows = document.querySelectorAll("table tbody tr");
+
+    input.value = q;
+    if (!q) {
+        return;
+    }
+
+    var needle = q.toLowerCase();
+    var shown = 0;
+    rows.forEach(function (row) {
+        var hay = row.textContent.toLowerCase();
+        var match = hay.indexOf(needle) !== -1;
+        row.style.display = match ? "" : "none";
+        if (match) {
+            shown += 1;
+        }
+    });
+
+    status.innerHTML = "Showing " + shown + " result(s) for <strong>" + q + "</strong>. <a href=\"/locks/\">clear</a>";
+})();
+</script>
 
 </body>
 </html>
